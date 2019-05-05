@@ -1,28 +1,43 @@
 package org.c0e.sglib;
 
+import com.sun.deploy.util.StringUtils;
 import org.junit.Test;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public class BuilderTest {
+
     @Test
     public void builderTest() throws Exception {
-        String v1 = "V1";
-        String v2 = "V2";
-        String v3 = "V3";
-        String v4 = "V4";
-        String v5 = "V5";
+        String a = "a";
+        String b = "b";
+        String c = "c";
+        String d = "d";
+        String e = "e";
+        String f = "f";
 
         Graph graph = Builder.create(Builder.Type.DIRECTED)
-                .addVertex(v1)
-                .addVertex(v2)
-                .addVertex(v3)
-                .addVertex(v4)
-                .addVertex(v5)
-                .addEdge(v1, v2)
-                .addEdge(v2, v3)
-                .addEdge(v4, v5)
-                .addEdge(v5, v1)
+                .addVertex(a)
+                .addVertex(b)
+                .addVertex(c)
+                .addVertex(d)
+                .addVertex(e)
+                .addVertex(f)
+                .addEdge(a, b)
+                .addEdge(a, c)
+                .addEdge(b, c)
+                .addEdge(b, d)
+                .addEdge(c, e)
+                .addEdge(e, d)
+                .addEdge(d, f)
                 .build();
 
-         System.out.print(graph.toString());
+        List<String> path = graph.getPath(a, f);
+
+        assertNotNull(path);
+        assertEquals("abdf", StringUtils.join(path, ""));
     }
 }

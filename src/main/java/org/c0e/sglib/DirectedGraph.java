@@ -1,9 +1,6 @@
 package org.c0e.sglib;
 
-import java.util.*;
-
 public class DirectedGraph<T> extends AbstractGraph<T> {
-
     public void addEdge(T begin, T end) throws GraphException {
         Integer weight = 1;
 
@@ -15,22 +12,9 @@ public class DirectedGraph<T> extends AbstractGraph<T> {
             throw new GraphException("End vertex does not exist");
         }
 
-        Integer beginIndex = indexes.get(begin);
-        Integer endIndex = indexes.get(end);
+        Integer beginIndex = vertexesToIndexes.get(begin);
+        Integer endIndex = vertexesToIndexes.get(end);
 
-        matrix.get(beginIndex).set(endIndex, weight);
-    }
-
-    public List getPath(T from, T to) {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (T vertex : vertexes) {
-            builder.append(vertex.toString());
-        }
-        return builder.toString();
+        adjacencyMatrix.get(beginIndex).set(endIndex, weight);
     }
 }
