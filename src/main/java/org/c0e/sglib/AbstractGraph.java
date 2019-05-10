@@ -37,16 +37,16 @@ abstract class AbstractGraph<T> implements Graph<T> {
 
         LinkedHashSet<Integer> visitedVertexes = new LinkedHashSet<>();
         Integer[] costs = new Integer[vertexes.size()];
-        Integer[] raletives = new Integer[vertexes.size()];
+        Integer[] relatives = new Integer[vertexes.size()];
 
         costs[vertexesToIndexes.get(from)] = 0;
 
         Integer index;
         while ((index = nextElement(costs, visitedVertexes)) != null) {
-            updateClosest(costs, raletives, index, adjacencyMatrix.get(index));
+            updateClosest(costs, relatives, index, adjacencyMatrix.get(index));
         }
 
-        return buildPath(raletives, vertexesToIndexes.get(from), vertexesToIndexes.get(to));
+        return buildPath(relatives, vertexesToIndexes.get(from), vertexesToIndexes.get(to));
     }
 
     private Integer nextElement(Integer[] costs, Set<Integer> visitedVertexes) {

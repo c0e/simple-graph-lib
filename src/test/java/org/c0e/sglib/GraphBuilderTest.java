@@ -88,7 +88,7 @@ public class GraphBuilderTest {
     }
 
     @Test(expected = GraphException.class)
-    public void doubleVertesTest() throws GraphException {
+    public void doubleVertexTest() throws GraphException {
         String a = "a";
         String b = "b";
         Graph build = GraphBuilder.<String>create(GraphBuilder.Type.DIRECTED)

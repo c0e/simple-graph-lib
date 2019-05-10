@@ -4,11 +4,11 @@ public class DirectedGraph<T> extends AbstractGraph<T> {
     public void addEdge(T begin, T end) throws GraphException {
         Integer weight = 1;
 
-        if (!vertexes.contains(begin) && begin != null) {
+        if (begin != null && !vertexes.contains(begin)) {
             throw new GraphException("Begin vertex does not exist");
         }
 
-        if (!vertexes.contains(end) && end != null) {
+        if (end != null && !vertexes.contains(end)) {
             throw new GraphException("End vertex does not exist");
         }
 
