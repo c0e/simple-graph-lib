@@ -1,6 +1,6 @@
 package org.c0e.sglib;
 
-public class Builder<T> {
+public class GraphBuilder<T> {
 
     public enum Type {
         DIRECTED, UNDIRECTED, SYNC_DIRECTED, SYNC_UNDIRECTED
@@ -8,8 +8,8 @@ public class Builder<T> {
 
     private Graph graph;
 
-    public static <T> Builder create(Type type) throws GraphException {
-        Builder<T> builder = new Builder<T>();
+    public static <T> GraphBuilder create(Type type) throws GraphException {
+        GraphBuilder<T> builder = new GraphBuilder<T>();
         switch (type) {
             case UNDIRECTED:
                 builder.graph = new UnDirectedGraph<T>();
@@ -27,12 +27,12 @@ public class Builder<T> {
         throw new GraphException("Graph type " + type.name() + " isn't implemented");
     }
 
-    public Builder addVertex(T vertex) throws GraphException {
+    public GraphBuilder addVertex(T vertex) throws GraphException {
         graph.addVertex(vertex);
         return this;
     }
 
-    public Builder addEdge(T begin, T end) throws GraphException {
+    public GraphBuilder addEdge(T begin, T end) throws GraphException {
         graph.addEdge(begin, end);
         return this;
     }

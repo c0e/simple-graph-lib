@@ -34,48 +34,69 @@ abstract class AbstractGraph<T> implements Graph<T> {
     }
 
     public List getPath(T from, T to) throws GraphException {
-        Set<T> path = new LinkedHashSet<>();
-        path.add(from);
 
-        T closest;
+        LinkedHashSet<Integer> visitedVertexes = new LinkedHashSet<>();
+        Integer[] costs = new Integer[vertexes.size()];
+        Integer[] raletives = new Integer[vertexes.size()];
 
-        while ((closest = getClosestElement(from, path)) != null) {
-            path.add(closest);
-            from = closest;
-            if (closest.equals(to)) {
-                return Arrays.asList(path.toArray());
-            }
+        costs[vertexesToIndexes.get(from)] = 0;
+
+        Integer index;
+        while ((index = nextElement(costs, visitedVertexes)) != null) {
+            updateClosest(costs, raletives, index, adjacencyMatrix.get(index));
         }
 
-        return Collections.EMPTY_LIST;
+        return buildPath(raletives, vertexesToIndexes.get(from), vertexesToIndexes.get(to));
     }
 
-    private T getClosestElement(T from, Set<T> path) {
-        ArrayList<Integer> adjList = adjacencyMatrix.get(vertexesToIndexes.get(from));
-
-        Integer minIndex = null;
+    private Integer nextElement(Integer[] costs, Set<Integer> visitedVertexes) {
         Integer minValue = null;
+        Integer minIndex = null;
 
-        for (int index = 0; index < adjList.size(); index++) {
-            Integer value = adjList.get(index);
-            T element = indexesToVertexes.get(index);
-            if (!path.contains(element)
-                    && !element.equals(from)
-                    && value != 0 && (minValue == null || value < minValue)) {
-                minIndex = index;
-                minValue = value;
+        for (Integer elementIndex = 0; elementIndex < costs.length; elementIndex++) {
+            Integer cost = costs[elementIndex];
+            if (cost != null && !visitedVertexes.contains(elementIndex)
+                    && (minValue == null || minValue > cost)) {
+                minIndex = elementIndex;
+                minValue = cost;
             }
         }
 
-        return indexesToVertexes.get(minIndex);
+        if (minIndex != null) {
+            visitedVertexes.add(minIndex);
+        }
+
+        return minIndex;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (T vertex : vertexes) {
-            builder.append(vertex.toString());
+
+    protected void updateClosest(Integer[] costs, Integer[] relatives, Integer beginElement, ArrayList<Integer> adjacencyList) {
+        for (int endElement = 0; endElement < adjacencyList.size(); endElement++) {
+            Integer weightOfTheAngle = adjacencyList.get(endElement);
+            if (!weightOfTheAngle.equals(0)) {
+                Integer weightOfPath = weightOfTheAngle + costs[beginElement];
+                if (costs[endElement] == null || weightOfPath < costs[endElement]) {
+                    costs[endElement] = weightOfPath;
+                    relatives[endElement] = beginElement;
+                }
+            }
         }
-        return builder.toString();
+    }
+
+    protected List buildPath(Integer[] vertexes, Integer from, Integer to) {
+        ArrayList<T> result = new ArrayList<>(vertexes.length);
+        do {
+            result.add(indexesToVertexes.get(to));
+            Integer next = vertexes[to];
+            to = next;
+        } while (to != null);
+
+        Collections.reverse(result);
+
+        if (result.get(0).equals(indexesToVertexes.get(from))) {
+            return result;
+        } else {
+            return Collections.EMPTY_LIST;
+        }
     }
 }
