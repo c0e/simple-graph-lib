@@ -7,6 +7,8 @@ to use synchronized realizations of them.
 
 Vertexes of the graph have a user defined type.
 
+The calculation of the path was implemented with the usage of the Dijkstra's algorithm.
+
 ## Usage
 
 You should use GraphBuilder class for building you graph data.
