@@ -74,9 +74,9 @@ abstract class AbstractGraph<T> implements Graph<T> {
         for (int endElement = 0; endElement < adjacencyList.size(); endElement++) {
             Integer weightOfTheAngle = adjacencyList.get(endElement);
             if (!weightOfTheAngle.equals(0)) {
-                Integer weightOfPath = weightOfTheAngle + costs[beginElement];
-                if (costs[endElement] == null || weightOfPath < costs[endElement]) {
-                    costs[endElement] = weightOfPath;
+                Integer weightOfThePath = weightOfTheAngle + costs[beginElement];
+                if (costs[endElement] == null || weightOfThePath < costs[endElement]) {
+                    costs[endElement] = weightOfThePath;
                     relatives[endElement] = beginElement;
                 }
             }

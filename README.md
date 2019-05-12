@@ -1,13 +1,38 @@
-# `simple-graph-lib`
+#Simple Graph Lib
 
-Simple Graph lib:
+##Description
 
-Support 2 types of graphs - directed and undirected with 3 operations:
+This tiny library supports both directed and undirected graphs with ability 
+to use synchronized realizations of them.
 
-addVertex - adds vertex to the graph
+Vertexes of the graph have user defined type.
 
-addEdge - adds edge to the graph
+##Usage
 
-getPath - returns a list of edges between 2 vertices (path doesn’t have to be optimal)
+You should use GraphBuilder class for building you graph data.
 
-Vertices have a user defined type.
+    String a = "a";
+    String b = "b";
+    String c = "c";
+    String d = "d";
+    
+    Graph graph = GraphBuilder.create(Builder.Type.DIRECTED)
+        .addVertex(a)
+        .addVertex(b)
+        .addVertex(c)
+        .addEdge(a, b)
+        .addEdge(b, c)
+        .addEdge(c, d)
+        .build();
+    
+    List<String> path = graph.getPath(a, f);
+
+
+**addVertex** - adds vertex to the graph
+
+**addEdge** - adds edge to the graph
+
+**build** - builds specific graph implementation.
+
+**getPath** - returns a list of edges between 2 vertices
+
