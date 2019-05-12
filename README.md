@@ -1,13 +1,13 @@
-#Simple Graph Lib
+# Simple Graph Lib
 
-##Description
+## Description
 
 This tiny library supports both directed and undirected graphs with ability 
 to use synchronized realizations of them.
 
-Vertexes of the graph have user defined type.
+Vertexes of the graph have a user defined type.
 
-##Usage
+## Usage
 
 You should use GraphBuilder class for building you graph data.
 
